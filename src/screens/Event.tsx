@@ -73,7 +73,7 @@ export type RootStackParamList = {
     PaymentPage: { bookingDetails: BookingDetails };
     BookingHistory: { bookingHistory: BookingDetails[] };
     PaymentSuccess: undefined;
-    AccountScreen:undefined;
+    AccountScreen: undefined;
 };
 
 
@@ -109,17 +109,40 @@ type Props = {
     navigation: ThingsToDoScreenNavigationProp;
 };
 
+type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
+
+interface ItemType {
+    price: string;
+    location: string;
+    date: string; 
+}
+
 interface PriceFilterModalProps {
     visible: boolean;
     onClose: () => void;
     onApply: (selectedRanges: Record<string, boolean>, selectedLocations: string[], selectedMonths: string[]) => void;
+    checkedRanges: Record<PriceRangeKey, boolean>; 
+    setCheckedRanges: React.Dispatch<React.SetStateAction<Record<PriceRangeKey, boolean>>>; 
+    selectedLocations: string[]; 
+    setSelectedLocations: React.Dispatch<React.SetStateAction<string[]>>; 
+    selectedMonths: string[]; 
+    setSelectedMonths: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const ThingsToDo = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [items, setItems] = useState<EventItem[]>([]);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [checkedRanges, setCheckedRanges] = useState<Record<PriceRangeKey, boolean>>({
+        range1: false,
+        range2: false,
+        range3: false,
+        range4: false,
+        range5: false,
+    });
+    const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+    const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
 
     useEffect(() => {
         const initialItems: EventItem[] = [
@@ -162,74 +185,73 @@ const ThingsToDo = () => {
             },
         ];
 
-initialItems.forEach(item => {
-    const month = getMonthFromDateString(item.date);
-    console.log(`Item Date: ${item.date}, Month: ${month}`); 
-});
+        initialItems.forEach(item => {
+            const month = getMonthFromDateString(item.date);
+            console.log(`Item Date: ${item.date}, Month: ${month}`);
+        });
 
-setItems(initialItems);
-setFilteredItems(initialItems);
+        setItems(initialItems);
+        setFilteredItems(initialItems);
     }, []);
 
-const renderItem = ({ item }: { item: AttractionItem }) => (
-    <View style={styles.card}>
-        <Image source={{ uri: item.image }} style={styles.image} />
-        <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>{item.title}</Text>
-            <Text style={styles.price}>Event Date: {item.date}</Text>
-            <Text style={styles.desc}>{item.desc}</Text>
+    const renderItem = ({ item }: { item: AttractionItem }) => (
+        <View style={styles.card}>
+            <Image source={{ uri: item.image }} style={styles.image} />
+            <View style={styles.cardContent}>
+                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.price}>Event Date: {item.date}</Text>
+                <Text style={styles.desc}>{item.desc}</Text>
+            </View>
         </View>
-    </View>
-);
+    );
 
-const toggleModal = () => {
-    setModalVisible((prev) => !prev);
-};
-
-const getMonthFromDateString = (dateString: string): string => {
-    const [day, month, year] = dateString.split(' ');
-    const monthMapping: { [key: string]: number } = {
-        January: 0,
-        February: 1,
-        March: 2,
-        April: 3,
-        May: 4,
-        June: 5,
-        July: 6,
-        August: 7,
-        September: 8,
-        October: 9,
-        November: 10,
-        December: 11,
+    const toggleModal = () => {
+        setModalVisible((prev) => !prev);
     };
 
-    const date = new Date(Number(year), monthMapping[month], Number(day));
+    const getMonthFromDateString = (dateString: string): string => {
+        const [day, month, year] = dateString.split(' ');
+        const monthMapping: { [key: string]: number } = {
+            January: 0,
+            February: 1,
+            March: 2,
+            April: 3,
+            May: 4,
+            June: 5,
+            July: 6,
+            August: 7,
+            September: 8,
+            October: 9,
+            November: 10,
+            December: 11,
+        };
 
-    return date.toLocaleString('default', { month: 'long' });
-};
+        const date = new Date(Number(year), monthMapping[month], Number(day));
 
+        return date.toLocaleString('default', { month: 'long' });
+    };
 
-const applyPriceFilter = (
-    selectedRanges: Record<string, boolean>,
-    selectedLocations: string[],
-    selectedMonths: string[]
-) => {
-    const noRangesSelected = Object.values(selectedRanges).every(value => !value);
-    const noLocationsSelected = selectedLocations.length === 0;
-    const noMonthsSelected = selectedMonths.length === 0;
+    const applyPriceFilter = (
+        selectedRanges: Record<string, boolean>,
+        selectedLocations: string[],
+        selectedMonths: string[]
+    ) => {
+        const noRangesSelected = Object.values(selectedRanges).every(value => !value);
+        const noLocationsSelected = selectedLocations.length === 0;
+        const noMonthsSelected = selectedMonths.length === 0;
 
-    if (noRangesSelected && noLocationsSelected && noMonthsSelected) {
-        console.log('No filters applied. Displaying all items.');
-        setFilteredItems(items);
-        setModalVisible(false);
-        return;
-    }
+        if (noRangesSelected && noLocationsSelected && noMonthsSelected) {
+            console.log('No filters applied. Displaying all items.');
+            setFilteredItems(items);
+            setModalVisible(false);
+            return;
+        }
 
-    const filtered = items.filter((item) => {
-        const priceValue = item.price === 'Free' ? 0 : parseFloat(item.price.replace(/[^0-9.-]+/g, ''));
+        const filtered = items.filter((item) => {
+            const priceValue = item.price === 'Free' ? 0 : parseFloat(item.price.replace(/[^0-9.-]+/g, ''));
 
-        const priceMatch =
-            noRangesSelected || (
+            const noRangesSelected = Object.values(selectedRanges).every(value => !value);
+            const priceMatch = noRangesSelected || (
                 (selectedRanges.range1 && priceValue >= 0 && priceValue <= 20) ||
                 (selectedRanges.range2 && priceValue > 20 && priceValue <= 40) ||
                 (selectedRanges.range3 && priceValue > 40 && priceValue <= 60) ||
@@ -237,207 +259,224 @@ const applyPriceFilter = (
                 (selectedRanges.range5 && priceValue > 80)
             );
 
-        const locationMatch = noLocationsSelected || selectedLocations.includes(item.location);
+            const locationMatch = noLocationsSelected || selectedLocations.includes(item.location);
 
-        // Month match
-        const itemMonth = getMonthFromDateString(item.date);
-        const monthMatch = noMonthsSelected || selectedMonths.includes(itemMonth);
+            const itemMonth = getMonthFromDateString(item.date);
+            const monthMatch = noMonthsSelected || selectedMonths.includes(itemMonth);
 
-        console.log(`Price Match: ${priceMatch}`);
-        console.log(`Location Match: ${locationMatch}`);
-        console.log(`Month Match: ${monthMatch}`);
+            console.log(`Item: ${item.price || item.date || item.location}`);
+            console.log(`Price Value: ${priceValue}`);
+            console.log(`Price Match: ${priceMatch}`);
+            console.log(`Location Match: ${locationMatch}`);
+            console.log(`Month Match: ${monthMatch}`);
 
-        return priceMatch && locationMatch && monthMatch;
-    });
+            return priceMatch && locationMatch && monthMatch;
+        });
 
-
-    console.log('Filtered items:', filtered);
-    setFilteredItems(filtered);
-    setModalVisible(false);
-};
-
-
-const PriceFilterModal: React.FC<PriceFilterModalProps> = ({ visible, onClose, onApply }) => {
-    type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
-
-    const [checkedRanges, setCheckedRanges] = useState<Record<PriceRangeKey, boolean>>({
-        range1: false,
-        range2: false,
-        range3: false,
-        range4: false,
-        range5: false,
-    });
-
-    const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
-    const locations = ['Georgetown', 'Ayer Itam', 'Bayan Lepas', 'Jelutong', 'Tanjung Bungah', 'Batu Ferringhi'];
-
-    const handleCheckboxChange = (range: PriceRangeKey) => {
-        setCheckedRanges((prev) => ({
-            ...prev,
-            [range]: !prev[range],
-        }));
+        console.log('Filtered items:', filtered);
+        setFilteredItems(filtered);
+        setModalVisible(false);
     };
 
-    const toggleLocationSelection = (location: string) => {
-        setSelectedLocations((prev) =>
-            prev.includes(location) ? prev.filter((loc) => loc !== location) : [...prev, location]
+    const PriceFilterModal: React.FC<PriceFilterModalProps> = ({
+        visible,
+        onClose,
+        onApply,
+        checkedRanges,
+        setCheckedRanges,
+        selectedLocations,
+        setSelectedLocations,
+        selectedMonths,
+        setSelectedMonths,
+    }) => {
+        const locations = ['Georgetown', 'Ayer Itam', 'Bayan Lepas', 'Jelutong', 'Tanjung Bungah', 'Batu Ferringhi'];
+    
+        const handleCheckboxChange = (range: PriceRangeKey) => {
+            setCheckedRanges((prev) => ({
+                ...prev,
+                [range]: !prev[range],
+            }));
+        };
+    
+        const toggleLocationSelection = (location: string) => {
+            setSelectedLocations((prev) =>
+                prev.includes(location) ? prev.filter((loc) => loc !== location) : [...prev, location]
+            );
+        };
+    
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+        const toggleMonthSelection = (month: string) => {
+            setSelectedMonths((prev) =>
+                prev.includes(month) ? prev.filter(m => m !== month) : [...prev, month]
+            );
+        };
+    
+        const handleReset = () => {
+            setCheckedRanges({
+                range1: false,
+                range2: false,
+                range3: false,
+                range4: false,
+                range5: false,
+            });
+            setSelectedLocations([]);
+            setSelectedMonths([]);
+        };
+    
+        const handleApply = () => {
+            console.log('Selected Ranges:', checkedRanges);
+            console.log('Selected Locations:', selectedLocations);
+            console.log('Selected Months:', selectedMonths);
+            onApply(checkedRanges, selectedLocations, selectedMonths);
+        };
+    
+        return (
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={visible}
+                onRequestClose={onClose}
+            >
+                <ScrollView
+                    style={styles.scrollView}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <TouchableOpacity onPress={onClose}>
+                                <Image source={require('../image/close.png')} style={styles.iconClose} />
+                            </TouchableOpacity>
+    
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                                <TouchableOpacity onPress={handleApply} style={styles.applyButton}>
+                                    <Text style={styles.applyButtonText}>Apply</Text>
+                                </TouchableOpacity>
+    
+                                <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
+                                    <Text style={styles.resetButtonText}>Reset Filters</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={styles.modalTitle}>Locations</Text>
+                            {locations.map((location) => (
+                                <View key={location} style={styles.checkboxItem}>
+                                    <CheckBox
+                                        value={selectedLocations.includes(location)}
+                                        onValueChange={() => toggleLocationSelection(location)}
+                                    />
+                                    <Text>{location}</Text>
+                                </View>
+                            ))}
+    
+                            <Text style={styles.modalTitle}>Price Range</Text>
+                            <View style={styles.checkboxContainer}>
+                                {Object.keys(checkedRanges).map((range, index) => (
+                                    <View key={index} style={styles.checkboxItem}>
+                                        <CheckBox
+                                            value={checkedRanges[range as PriceRangeKey]}
+                                            onValueChange={() => handleCheckboxChange(range as PriceRangeKey)}
+                                        />
+                                        <Text>{`RM ${index * 20} - RM ${index * 20 + 20}`}</Text>
+                                    </View>
+                                ))}
+                            </View>
+    
+                            <Text style={styles.modalTitle}>Month</Text>
+                            <View style={styles.checkboxContainer}>
+                                {months.map((month) => (
+                                    <View key={month} style={styles.checkboxItem}>
+                                        <CheckBox
+                                            value={selectedMonths.includes(month)}
+                                            onValueChange={() => toggleMonthSelection(month)}
+                                        />
+                                        <Text style={styles.checkboxLabel}>{month}</Text>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
+            </Modal>
         );
     };
-
-    const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    const toggleMonthSelection = (month: string) => {
-        setSelectedMonths((prev) =>
-            prev.includes(month) ? prev.filter(m => m !== month) : [...prev, month]
-        );
-    };
-
-    const handleApply = () => {
-        console.log('Selected Ranges:', checkedRanges);
-        console.log('Selected Locations:', selectedLocations);
-        console.log('Selected Months:', selectedMonths);
-        onApply(checkedRanges, selectedLocations, selectedMonths);
-    };
-
+    
 
     return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={visible}
-            onRequestClose={onClose}
-        >
+        <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
+
             <ScrollView
                 style={styles.scrollView}
+                contentContainerStyle={styles.contentContainer}
                 keyboardShouldPersistTaps="handled"
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity onPress={onClose} >
-                            <Image source={require('../image/close.png')} style={styles.iconClose} />
-                        </TouchableOpacity>
+                <View style={styles.container}>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={styles.modalTitle}>Locations</Text>
-                            <TouchableOpacity onPress={handleApply} style={styles.applyButton}>
-                                <Text style={styles.applyButtonText}>Apply</Text>
+                    <View style={styles.header}>
+                        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>
+                            <Image source={require('../image/back-icon.png')} />
+                        </TouchableOpacity>
+                        <Text style={styles.title}>Events</Text>
+                        <View style={styles.headerIcons}>
+                            <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Cart')}>
+                                <Image source={require('../image/Shopping-cart.png')} />
                             </TouchableOpacity>
                         </View>
-                        {locations.map((location) => (
-                            <View key={location} style={styles.checkboxItem}>
-                                <CheckBox
-                                    value={selectedLocations.includes(location)}
-                                    onValueChange={() => toggleLocationSelection(location)}
-                                />
-                                <Text>{location}</Text>
-                            </View>
-                        ))}
+                    </View>
 
-                        <Text style={styles.modalTitle}>Price Range</Text>
-                        <View style={styles.checkboxContainer}>
-                            {Object.keys(checkedRanges).map((range, index) => (
-                                <View key={index} style={styles.checkboxItem}>
-                                    <CheckBox
-                                        value={checkedRanges[range as PriceRangeKey]}
-                                        onValueChange={() => handleCheckboxChange(range as PriceRangeKey)}
-                                    />
-                                    <Text>{`RM ${index * 20} - RM ${index * 20 + 20}`}</Text>
-                                </View>
-                            ))}
-                        </View>
+                    <View style={styles.filterIcon}>
+                        <TouchableOpacity style={styles.iconButton} onPress={toggleModal}>
+                            <NavItem title="" icon={require('../image/filter.png')} />
+                            <Text style={styles.filterText}>Filter</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                        <Text style={styles.modalTitle}>Month</Text>
-                        <View style={styles.checkboxContainer}>
-                            {months.map((month) => (
-                                <View key={month} style={styles.checkboxItem}>
-                                    <CheckBox
-                                        value={selectedMonths.includes(month)}
-                                        onValueChange={() => toggleMonthSelection(month)}
-                                    />
-                                    <Text style={styles.checkboxLabel}>{month}</Text>
-                                </View>
-                            ))}
-                        </View>
+                    <PriceFilterModal
+                        visible={modalVisible}
+                        onClose={toggleModal}
+                        onApply={applyPriceFilter}
+                        checkedRanges={checkedRanges} 
+                        setCheckedRanges={setCheckedRanges} 
+                        selectedLocations={selectedLocations}
+                        setSelectedLocations={setSelectedLocations} 
+                        selectedMonths={selectedMonths}
+                        setSelectedMonths={setSelectedMonths} 
+                    />
 
-                        <View style={styles.rowContainer}>
-
-
-                        </View>
+                    <View style={{ flex: 1 }}>
+                        <FlatList
+                            data={filteredItems}
+                            keyExtractor={(item) => item.id}
+                            renderItem={renderItem}
+                        />
                     </View>
                 </View>
             </ScrollView>
-        </Modal>
 
-    );
-};
+            <View style={styles.bottomNav}>
 
-return (
-    <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
-
-        <ScrollView
-            style={styles.scrollView}
-            contentContainerStyle={styles.contentContainer}
-            keyboardShouldPersistTaps="handled"
-        >
-            <View style={styles.container}>
-
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>
-                        <Image source={require('../image/back-icon.png')} />
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Events</Text>
-                    <View style={styles.headerIcons}>
-                        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Cart')}>
-                            <Image source={require('../image/Shopping-cart.png')} />
-                        </TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>
+                    <View style={{ alignItems: 'center', marginBottom: 5, }}>
+                        <Image source={require('../image/home-icon.png')} style={styles.iconImage} />
+                        <Text style={styles.homeNav}>Home</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.filterIcon}>
-                    <TouchableOpacity style={styles.iconButton} onPress={toggleModal}>
-                        <NavItem title="" icon={require('../image/filter.png')} />
-                        <Text style={styles.filterText}>Filter</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('BookingHistory', { bookingHistory: [] })}>
+                    <View style={{ alignItems: 'center', marginBottom: 5 }}>
+                        <Image source={require('../image/trips-icon.png')} style={styles.iconImage} />
+                        <Text style={styles.homeNav}>Trips</Text>
+                    </View>
+                </TouchableOpacity>
 
-                <PriceFilterModal visible={modalVisible} onClose={toggleModal} onApply={applyPriceFilter} />
-
-                <View style={{ flex: 1 }}>
-                    <FlatList
-                        data={filteredItems}
-                        keyExtractor={(item) => item.id}
-                        renderItem={renderItem}
-                    />
-                </View>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('AccountScreen')}>
+                    <View style={{ alignItems: 'center', marginBottom: 5, }}>
+                        <Image source={require('../image/account-icon.png')} style={styles.iconImage} />
+                        <Text style={styles.homeNav}>Account</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
-        </ScrollView>
-
-        <View style={styles.bottomNav}>
-
-            <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>
-                <View style={{ alignItems: 'center', marginBottom: 5, }}>
-                    <Image source={require('../image/home-icon.png')} style={styles.iconImage} />
-                    <Text style={styles.homeNav}>Home</Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('BookingHistory', { bookingHistory: [] })}>
-                <View style={{ alignItems: 'center', marginBottom: 5 }}>
-                    <Image source={require('../image/trips-icon.png')} style={styles.iconImage} />
-                    <Text style={styles.homeNav}>Trips</Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('AccountScreen')}>
-                <View style={{ alignItems: 'center', marginBottom: 5, }}>
-                    <Image source={require('../image/account-icon.png')} style={styles.iconImage} />
-                    <Text style={styles.homeNav}>Account</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-    </ImageBackground >
-);
+        </ImageBackground >
+    );
 };
 
 const NavItem: React.FC<NavItemProps> = ({ title, icon }) => {
@@ -613,14 +652,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10,
-        marginTop: 10,
-        marginLeft: 120,
+        marginTop: 20,
+        marginLeft: 100,
+        marginRight: 20,
         alignItems: 'center',
         borderWidth: 1,
         width: 100
     },
     applyButtonText: {
         color: '#001a33',
+        fontWeight: 'bold',
+    },
+    resetButton: {
+        backgroundColor: '#f44336',
+        padding: 10,
+        borderRadius: 5,
+        marginLeft: 0,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    resetButtonText: {
+        color: '#fff',
         fontWeight: 'bold',
     },
     navIcon: {

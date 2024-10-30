@@ -19,17 +19,6 @@ interface TicketOption {
     image: string;
 }
 
-interface FoodItem {
-    id: string;
-    title: string;
-    price: string;
-    location: string;
-    image: string;
-    date: string;
-    rating: number;
-    booked: string;
-}
-
 interface ThingsToDoItem {
     id: string;
     title: string;

@@ -43,7 +43,7 @@ const Cart: React.FC = () => {
     );
   }
 
-  const { cartItems } = context;
+  const { cartItems, removeItem } = context;
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const toggleSelectItem = (itemId: string) => {
@@ -54,6 +54,10 @@ const Cart: React.FC = () => {
     }
   };
 
+  const handleDeleteItem = (itemId: string) => {
+    removeItem(itemId); 
+  };
+
   const renderItem = ({ item }: { item: CartItem }) => (
 
     <View style={styles.cartItemContainer}>
@@ -62,7 +66,6 @@ const Cart: React.FC = () => {
         onValueChange={() => toggleSelectItem(item.id)}
       />
       <View style={styles.imageContainer}>
-        {/* Placeholder for image */}
         {item.option?.image ? (
           <Image source={{ uri: item.option.image }} style={styles.ticketImage} />
         ) : (
@@ -75,11 +78,13 @@ const Cart: React.FC = () => {
         <Text style={styles.itemText}>Travelers: Adults</Text>
         <Text style={styles.itemText}>Quantity: {item.quantity}</Text>
         <Text style={styles.itemPrice}>RM {item.option?.price}</Text>
+        <TouchableOpacity onPress={() => handleDeleteItem(item.id)} style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 
-  // Calculate subtotal
   const subtotal = cartItems.reduce((sum, item) => sum + (item.option?.price || 0) * item.quantity, 0);
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
   },
   cartItemContainer: {
     flexDirection: 'row',
-    padding: 16,
+    padding: 10,
     marginBottom: 12,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -154,12 +159,14 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
     marginTop: 40,
+    width:360,
   },
   imageContainer: {
-    width: 80,
-    height: 80,
-    marginRight: 16,
-    marginTop: 0,
+    width: 85,
+    height: 85,
+    marginRight: 30,
+    marginTop: 35,
+    marginLeft: -10,
   },
   imagePlaceholder: {
     width: '100%',
@@ -175,6 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    marginTop: 35,
   },
   itemText: {
     fontSize: 14,
@@ -185,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    marginTop: 8,
+    marginTop: 10,
   },
   summaryContainer: {
     padding: 16,
@@ -259,7 +267,21 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 8,
     marginTop: 15,
-  }
+  },
+  deleteButton: {
+    marginTop: 20,
+    backgroundColor: '#ff4d4d',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    marginLeft:120,
+    marginBottom:10,
+    width:75,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
 
 export default Cart;

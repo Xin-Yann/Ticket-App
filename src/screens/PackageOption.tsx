@@ -47,7 +47,6 @@ interface BookItem {
   travelers: Traveler[];
 }
 
-
 const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) => {
   const { item } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
@@ -240,7 +239,6 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                 </Picker>
               </View>
 
-
               <Text style={styles.modalTitle}>Travelers</Text>
               {/* Adult */}
               <View style={styles.travelerRow}>
@@ -342,6 +340,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
             <TouchableOpacity onPress={() => setDetailsModalVisible(false)} >
               <Image source={require('../image/close.png')} style={styles.iconClose} />
             </TouchableOpacity>
+            <Text style={styles.packageTitle}>Package Details</Text>
             {selectedOption && (
               <>
                 <Text style={styles.description}>{selectedOption.details}</Text>
@@ -501,7 +500,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
+    
   },
   modalTitle: {
     fontSize: 18,
@@ -522,7 +521,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginVertical: 10,
-    textAlign: 'left',
     lineHeight: 30,
     width: 250,
     color: '#001a33',
@@ -656,6 +654,13 @@ const styles = StyleSheet.create({
   },
   ticketImage: {
     display: 'none',
+  },
+  packageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#001a33',
+    textAlign:'left',
   },
 
 });
