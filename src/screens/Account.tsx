@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
-
-
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -146,7 +144,7 @@ const AccountScreen = () => {
                     </View>
                 </ScrollView>
             </View>
-            {/* Bottom Tab Bar */}
+            
             <View style={styles.bottomNav}>
 
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>

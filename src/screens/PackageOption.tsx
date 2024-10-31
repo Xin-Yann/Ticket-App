@@ -62,7 +62,6 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
   const [infants, setInfants] = useState(0);
   const { addToCart } = useContext(CartContext) || { addToCart: () => { } };
 
-
   const handleSelectOption = (option: TicketOption) => {
     setSelectedOption(option);
     setSelectModalVisible(true);
@@ -177,9 +176,12 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
 
           <View style={styles.contentContainer}>
             <Text style={styles.title}>Package Options</Text>
+
             {item.ticketOption.map((option: TicketOption) => (
               <View key={option.id} style={styles.ticketOptionCard}>
+
                 <Image source={{ uri: option.image }} style={styles.ticketImage} />
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Text style={styles.ticketOptionTitle}>{option.title}</Text>
                   <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => handleSeeDetails(option)}>
@@ -187,6 +189,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                     <Image source={require('../image/back-right.png')} style={styles.iconback} />
                   </TouchableOpacity>
                 </View>
+
                 <View style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', justifyContent: 'space-between' }}>
                   <Text style={styles.ticketOptionPrice}>RM {option.price.toFixed(2)}</Text>
                   <TouchableOpacity style={styles.selectButton} onPress={() => handleSelectOption(option)}>
@@ -195,6 +198,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                 </View>
               </View>
             ))}
+
           </View>
         </View>
       </ScrollView>
@@ -212,6 +216,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
               <Text style={styles.selectedPackage}>
                 {selectedOption ? selectedOption.title : 'None'}
               </Text>
+              
               <Text style={styles.selectedDate}>
                 Selected Date: {selectedDate ? selectedDate : 'None'}
               </Text>

@@ -11,7 +11,6 @@ LogBox.ignoreLogs([
   'Got a component with the name cart for the screen cart.',
 ]);
 
-
 interface NavItemProps {
   title: string;
   icon: any;
@@ -69,7 +68,6 @@ export type RootStackParamList = {
   FoodDining: undefined;
 };
 
-
 interface Traveler {
   type: 'adult' | 'senior' | 'child' | 'infant';
   count: number;
@@ -103,12 +101,6 @@ type Props = {
 };
 
 type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
-
-// interface ItemType {
-//   price: string;
-//   location: string;
-//   date: string;
-// }
 
 interface PriceFilterModalProps {
   visible: boolean;
@@ -290,8 +282,6 @@ const ThingsToDo = () => {
       return priceMatch && locationMatch && monthMatch;
     });
 
-
-
     console.log('Filtered items:', filtered);
     setFilteredItems(filtered);
     setModalVisible(false);
@@ -376,6 +366,7 @@ const ThingsToDo = () => {
                   <Text style={styles.resetButtonText}>Reset Filters</Text>
                 </TouchableOpacity>
               </View>
+
               <Text style={styles.modalTitle}>Locations</Text>
               {locations.map((location) => (
                 <View key={location} style={styles.checkboxItem}>

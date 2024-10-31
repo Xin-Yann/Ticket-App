@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from './ThingsToDo';
@@ -35,7 +35,7 @@ interface BookingDetails {
     contact: string;
     subtotal: number;
     ticket: BookItem; 
-  }
+}
 
 type BookingPageProps = {
     navigation: StackNavigationProp<RootStackParamList, 'BookingPage'>;
@@ -53,7 +53,6 @@ const BookingPage: React.FC<BookingPageProps> = ({ navigation, route }) => {
     const [contact, setContact] = useState('');
     const [currentStep, setCurrentStep] = useState(1);
     const totalSteps = 3;
-
 
     useEffect(() => {
         const calculatedSubtotal = bookItem.travelers.reduce((sum, traveler) => {

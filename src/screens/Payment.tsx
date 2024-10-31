@@ -1,4 +1,3 @@
-// PaymentPage.tsx
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, ScrollView, Image } from 'react-native';
 import { RouteProp } from '@react-navigation/native';

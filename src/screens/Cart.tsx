@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { CartContext } from '../screens/CartContext'; 
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';

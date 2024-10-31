@@ -73,7 +73,6 @@ const Attraction: React.FC<AttractionProps> = ({ navigation, route }) => {
                 </View>
             </ScrollView>
 
-            {/* Bottom Navigation */}
             <View style={styles.bottomNav}>
 
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>

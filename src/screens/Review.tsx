@@ -67,10 +67,6 @@ const ReviewsScreen: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
     }
   };
 
-  // Extract item from route parameters
-  // const { item } = route.params;
-  
-
   return (
     <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
       <ScrollView style={styles.container}>
@@ -99,7 +95,6 @@ const ReviewsScreen: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
             </TouchableOpacity>
         </ScrollView>
 
-        {/* Reviews Section */}
         <View style={styles.reviewSection}>
           <Text style={styles.reviewTitle}>Reviews</Text>
           <View style={styles.ratingContainer}>
@@ -119,7 +114,6 @@ const ReviewsScreen: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
           />
           </View>
 
-          {/* Display message if rating is below 3.7 */}
           {overallRating < 3.7 && (
             <Text style={styles.noRatingText}>No star rating available</Text>
           )}
@@ -140,7 +134,6 @@ const ReviewsScreen: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
             </View>
           ))}
 
-          {/* Single Review */}
           <View style={styles.reviewCard}>
             <View style={styles.reviewHeader}>
               <View style={styles.avatar}></View>
@@ -157,7 +150,6 @@ const ReviewsScreen: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
             </Text>
           </View>
 
-          {/* Comment Box */}
           <View style={styles.commentBox}>
             <TextInput
               placeholder="Add Comment"

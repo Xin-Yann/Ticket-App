@@ -131,7 +131,6 @@ interface PriceFilterModalProps {
     setSelectedMonths: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-
 const Attraction = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [filteredItems, setFilteredItems] = useState<any[]>([]);

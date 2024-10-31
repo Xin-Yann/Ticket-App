@@ -4,15 +4,12 @@ import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigationProp } from '@react-navigation/native';
-
-
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
     'VirtualizedLists should never be nested inside plain ScrollViews',
     'Got a component with the name cart for the screen cart.',
 ]);
-
 
 interface NavItemProps {
     title: string;
@@ -112,12 +109,6 @@ type Props = {
 };
 
 type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
-
-interface ItemType {
-    price: string;
-    location: string;
-    date: string;
-}
 
 interface PriceFilterModalProps {
     visible: boolean;
@@ -278,8 +269,6 @@ const FoodDining = () => {
 
             return priceMatch && locationMatch && monthMatch;
         });
-
-
 
         console.log('Filtered items:', filtered);
         setFilteredItems(filtered);
@@ -448,7 +437,6 @@ const FoodDining = () => {
                         selectedMonths={selectedMonths}
                         setSelectedMonths={setSelectedMonths}
                     />
-
 
                     <View style={{ flex: 1 }}>
                         <FlatList

@@ -111,12 +111,6 @@ type Props = {
 
 type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
 
-interface ItemType {
-    price: string;
-    location: string;
-    date: string; 
-}
-
 interface PriceFilterModalProps {
     visible: boolean;
     onClose: () => void;
@@ -400,7 +394,6 @@ const ThingsToDo = () => {
         );
     };
     
-
     return (
         <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
 
