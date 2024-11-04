@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState} from 'react';
 import { Alert } from 'react-native'; 
 
 interface TicketOption {
@@ -14,11 +14,13 @@ interface CartItem {
   date: string;  
   time: string; 
   quantity: number;  
+  image?: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[]; 
   addToCart: (item: CartItem) => void; 
+  removeItem: (item: string) => void; 
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -38,10 +40,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const removeItem = (itemId: string) => {
+    setCartItems((prevItems) => {
+      const newItems = prevItems.filter(item => item.id !== itemId);
+      if (newItems.length < prevItems.length) {
+        Alert.alert(
+          'Removed!',
+          'Item removed from cart successfully!',
+          [{ text: 'OK' }],
+          { cancelable: false }
+        );
+      }
+      return newItems;
+    });
+    console.log('Item removed from cart:', itemId);
+  };
+
   console.log('Current cart items:', cartItems);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeItem  }}>
       {children}
     </CartContext.Provider>
   );

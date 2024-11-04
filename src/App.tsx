@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Import screens
 import ThingsToDoScreen from './screens/ThingsToDo';
 import Attraction from './screens/Attractions';
-import ItemDetails from './screens/ItemDetails';
 import AttractionDetails from './screens/AttractionDetails';
 import Cart from './screens/Cart';
 import PacakgeOption from './screens/PackageOption';
@@ -50,21 +49,21 @@ interface NavItemProps {
 }
 
 type RootStackParamList = {
-  Home: undefined;
   ThingsToDo: undefined;
-  Attraction: undefined;
-  Cart: undefined;
-  PaymentPage: { bookingDetails: BookingDetails };
   ItemDetails: { item: ThingsToDoItem };
+  Attraction: undefined;
   AttractionDetails: { item: AttractionItem };
-  BestofPenangDetails: { item: BestofPenangItem };
-  PackageOption: undefined;
+  Cart: undefined;
+  Home: undefined;
   BookingPage: { bookItem: BookItem };
+  PackageOption: { item: ThingsToDoItem };
+  PaymentPage: { bookingDetails: BookingDetails | null };
   BookingHistory: { bookingHistory: BookingDetails[] };
   PaymentSuccess: undefined;
-  EventPage:undefined;
-  ReviewsScreen:undefined;
+  EventPage: undefined;
+  ReviewsScreen: { item: AttractionItem };
   AccountScreen: undefined;
+  FoodDining: undefined;
 };
 
 interface AttractionItem {
@@ -131,7 +130,6 @@ const App = () => {
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="ThingsToDo" component={ThingsToDoScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Attraction" component={Attraction} options={{ headerShown: false }} />
-            <Stack.Screen name="ItemDetails" component={ItemDetails} options={{ headerShown: false }} />
             <Stack.Screen name="AttractionDetails" component={AttractionDetails} options={{ headerShown: false }} />
             <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
             <Stack.Screen name="PackageOption" component={PacakgeOption} options={{ headerShown: false }} />

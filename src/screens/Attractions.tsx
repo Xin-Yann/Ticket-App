@@ -4,7 +4,6 @@ import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigationProp } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -20,10 +19,11 @@ interface NavItemProps {
 interface TicketOption {
     id: string;
     title: string;
-    price: number; 
+    price: number;
     details: string;
     image: string;
 }
+
 
 interface AttractionItem {
     id: string;
@@ -38,6 +38,20 @@ interface AttractionItem {
     date: string;
 }
 
+
+interface ThingsToDoItem {
+    id: string;
+    title: string;
+    rating: number;
+    booked: string;
+    price: string;
+    location: string;
+    desc: string;
+    image: string;
+    ticketOption: TicketOption[];
+    date: string;
+}
+
 interface PriceFilterModalProps {
     visible: boolean;
     onClose: () => void;
@@ -45,16 +59,21 @@ interface PriceFilterModalProps {
 }
 
 export type RootStackParamList = {
-    Home: undefined;
-    Cart: undefined;
+    ThingsToDo: undefined;
+    ItemDetails: { item: ThingsToDoItem };
     Attraction: undefined;
     AttractionDetails: { item: AttractionItem };
-    PackageOption: { item: AttractionItem };
-    PaymentPage: { bookingDetails: BookingDetails };
+    Cart: undefined;
+    Home: undefined;
+    BookingPage: { bookItem: BookItem };
+    PackageOption: { item: ThingsToDoItem };
+    PaymentPage: { bookingDetails: BookingDetails | null };
     BookingHistory: { bookingHistory: BookingDetails[] };
     PaymentSuccess: undefined;
-    ReviewsScreen:undefined;
-    AccountScreen:undefined;
+    EventPage: undefined;
+    ReviewsScreen: { item: AttractionItem };
+    AccountScreen: undefined;
+    FoodDining: undefined;
 };
 
 
@@ -97,11 +116,35 @@ type Props = {
     navigation: ThingsToDoScreenNavigationProp;
 };
 
+type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
+
+
+interface PriceFilterModalProps {
+    visible: boolean;
+    onClose: () => void;
+    onApply: (selectedRanges: Record<string, boolean>, selectedLocations: string[], selectedMonths: string[]) => void;
+    checkedRanges: Record<PriceRangeKey, boolean>;
+    setCheckedRanges: React.Dispatch<React.SetStateAction<Record<PriceRangeKey, boolean>>>;
+    selectedLocations: string[];
+    setSelectedLocations: React.Dispatch<React.SetStateAction<string[]>>;
+    selectedMonths: string[];
+    setSelectedMonths: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
 const Attraction = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [filteredItems, setFilteredItems] = useState<any[]>([]);
     const [items, setItems] = useState<AttractionItem[]>([]);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const [checkedRanges, setCheckedRanges] = useState<Record<PriceRangeKey, boolean>>({
+        range1: false,
+        range2: false,
+        range3: false,
+        range4: false,
+        range5: false,
+    });
+    const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+    const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
 
     useEffect(() => {
         const initialItems: AttractionItem[] = [
@@ -188,12 +231,38 @@ const Attraction = () => {
         setModalVisible((prev) => !prev);
     };
 
-    const applyPriceFilter = (selectedRanges: Record<string, boolean>, selectedLocations: string[], selectedMonths: string[]) => {
+    const getMonthFromDateString = (dateString: string): string => {
+        const [day, month, year] = dateString.split(' ');
+        const monthMapping: { [key: string]: number } = {
+            January: 0,
+            February: 1,
+            March: 2,
+            April: 3,
+            May: 4,
+            June: 5,
+            July: 6,
+            August: 7,
+            September: 8,
+            October: 9,
+            November: 10,
+            December: 11,
+        };
+
+        const date = new Date(Number(year), monthMapping[month], Number(day));
+
+        return date.toLocaleString('default', { month: 'long' });
+    };
+
+    const applyPriceFilter = (
+        selectedRanges: Record<string, boolean>,
+        selectedLocations: string[],
+        selectedMonths: string[]
+    ) => {
         const noRangesSelected = Object.values(selectedRanges).every(value => !value);
         const noLocationsSelected = selectedLocations.length === 0;
+        const noMonthsSelected = selectedMonths.length === 0;
 
-
-        if (noRangesSelected && noLocationsSelected) {
+        if (noRangesSelected && noLocationsSelected && noMonthsSelected) {
             console.log('No filters applied. Displaying all items.');
             setFilteredItems(items);
             setModalVisible(false);
@@ -203,39 +272,47 @@ const Attraction = () => {
         const filtered = items.filter((item) => {
             const priceValue = item.price === 'Free' ? 0 : parseFloat(item.price.replace(/[^0-9.-]+/g, ''));
 
-            const priceMatch =
+            const noRangesSelected = Object.values(selectedRanges).every(value => !value);
+            const priceMatch = noRangesSelected || (
                 (selectedRanges.range1 && priceValue >= 0 && priceValue <= 20) ||
                 (selectedRanges.range2 && priceValue > 20 && priceValue <= 40) ||
                 (selectedRanges.range3 && priceValue > 40 && priceValue <= 60) ||
                 (selectedRanges.range4 && priceValue > 60 && priceValue <= 80) ||
-                (selectedRanges.range5 && priceValue > 80);
+                (selectedRanges.range5 && priceValue > 80)
+            );
 
-            const locationMatch = selectedLocations.length === 0 || selectedLocations.includes(item.location);
+            const locationMatch = noLocationsSelected || selectedLocations.includes(item.location);
 
-            const itemDate = new Date(item.date);
-            const itemMonth = itemDate.toLocaleString('default', { month: 'long' });
-            const monthMatch = selectedMonths.length === 0 || selectedMonths.includes(itemMonth);
+            const itemMonth = getMonthFromDateString(item.date);
+            const monthMatch = noMonthsSelected || selectedMonths.includes(itemMonth);
 
-            return (priceMatch || locationMatch) && monthMatch;
+            console.log(`Item: ${item.price || item.date || item.location}`);
+            console.log(`Price Value: ${priceValue}`);
+            console.log(`Price Match: ${priceMatch}`);
+            console.log(`Location Match: ${locationMatch}`);
+            console.log(`Month Match: ${monthMatch}`);
+
+            return priceMatch && locationMatch && monthMatch;
         });
+
+
 
         console.log('Filtered items:', filtered);
         setFilteredItems(filtered);
         setModalVisible(false);
     };
 
-    const PriceFilterModal: React.FC<PriceFilterModalProps> = ({ visible, onClose, onApply }) => {
-        type PriceRangeKey = 'range1' | 'range2' | 'range3' | 'range4' | 'range5';
-
-        const [checkedRanges, setCheckedRanges] = useState<Record<PriceRangeKey, boolean>>({
-            range1: false,
-            range2: false,
-            range3: false,
-            range4: false,
-            range5: false,
-        });
-
-        const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+    const PriceFilterModal: React.FC<PriceFilterModalProps> = ({
+        visible,
+        onClose,
+        onApply,
+        checkedRanges,
+        setCheckedRanges,
+        selectedLocations,
+        setSelectedLocations,
+        selectedMonths,
+        setSelectedMonths,
+    }) => {
         const locations = ['Georgetown', 'Ayer Itam', 'Bayan Lepas', 'Jelutong', 'Tanjung Bungah', 'Batu Ferringhi'];
 
         const handleCheckboxChange = (range: PriceRangeKey) => {
@@ -251,7 +328,6 @@ const Attraction = () => {
             );
         };
 
-        const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         const toggleMonthSelection = (month: string) => {
@@ -260,7 +336,22 @@ const Attraction = () => {
             );
         };
 
+        const handleReset = () => {
+            setCheckedRanges({
+                range1: false,
+                range2: false,
+                range3: false,
+                range4: false,
+                range5: false,
+            });
+            setSelectedLocations([]);
+            setSelectedMonths([]);
+        };
+
         const handleApply = () => {
+            console.log('Selected Ranges:', checkedRanges);
+            console.log('Selected Locations:', selectedLocations);
+            console.log('Selected Months:', selectedMonths);
             onApply(checkedRanges, selectedLocations, selectedMonths);
         };
 
@@ -277,16 +368,20 @@ const Attraction = () => {
                 >
                     <View style={styles.modalContainer}>
                         <View style={styles.modalContent}>
-                            <TouchableOpacity onPress={onClose} >
+                            <TouchableOpacity onPress={onClose}>
                                 <Image source={require('../image/close.png')} style={styles.iconClose} />
                             </TouchableOpacity>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Text style={styles.modalTitle}>Locations</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                                 <TouchableOpacity onPress={handleApply} style={styles.applyButton}>
                                     <Text style={styles.applyButtonText}>Apply</Text>
                                 </TouchableOpacity>
+
+                                <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
+                                    <Text style={styles.resetButtonText}>Reset Filters</Text>
+                                </TouchableOpacity>
                             </View>
+                            <Text style={styles.modalTitle}>Locations</Text>
                             {locations.map((location) => (
                                 <View key={location} style={styles.checkboxItem}>
                                     <CheckBox
@@ -322,18 +417,13 @@ const Attraction = () => {
                                     </View>
                                 ))}
                             </View>
-
-                            <View style={styles.rowContainer}>
-
-
-                            </View>
                         </View>
                     </View>
                 </ScrollView>
             </Modal>
-
         );
     };
+
 
     return (
         <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
@@ -363,7 +453,17 @@ const Attraction = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <PriceFilterModal visible={modalVisible} onClose={toggleModal} onApply={applyPriceFilter} />
+                    <PriceFilterModal
+                        visible={modalVisible}
+                        onClose={toggleModal}
+                        onApply={applyPriceFilter}
+                        checkedRanges={checkedRanges}
+                        setCheckedRanges={setCheckedRanges}
+                        selectedLocations={selectedLocations}
+                        setSelectedLocations={setSelectedLocations}
+                        selectedMonths={selectedMonths}
+                        setSelectedMonths={setSelectedMonths}
+                    />
 
                     <View style={{ flex: 1 }}>
                         <FlatList
@@ -479,10 +579,10 @@ const styles = StyleSheet.create({
         marginLeft: 25,
         marginRight: 25,
         shadowColor: '#0000',
-        shadowOffset: { width: 0, height: 2 }, 
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 1,
-        shadowRadius: 3, 
-        elevation: 5, 
+        shadowRadius: 3,
+        elevation: 5,
     },
     image: {
         width: 80,
@@ -608,6 +708,18 @@ const styles = StyleSheet.create({
         borderTopColor: '#ddd',
         borderTopWidth: 1,
     },
+    resetButton: {
+        backgroundColor: '#f44336',
+        padding: 10,
+        borderRadius: 5,
+        marginLeft: 0,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    resetButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    }
 });
 
 export default Attraction;

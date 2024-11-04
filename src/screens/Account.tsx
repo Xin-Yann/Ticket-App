@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
-
-
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -17,17 +15,6 @@ interface TicketOption {
     price: number;
     details: string;
     image: string;
-}
-
-interface FoodItem {
-    id: string;
-    title: string;
-    price: string;
-    location: string;
-    image: string;
-    date: string;
-    rating: number;
-    booked: string;
 }
 
 interface ThingsToDoItem {
@@ -157,7 +144,7 @@ const AccountScreen = () => {
                     </View>
                 </ScrollView>
             </View>
-            {/* Bottom Tab Bar */}
+            
             <View style={styles.bottomNav}>
 
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>

@@ -1,25 +1,25 @@
 {
-  "root": "C:\\Users\\user\\TicketApp\\src",
-  "reactNativePath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native",
+  "root": "C:\\Users\\user\\Ticket-App-1\\src",
+  "reactNativePath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native",
   "reactNativeVersion": "0.75",
   "dependencies": {
     "@react-native-community/checkbox": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\checkbox",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\checkbox",
       "name": "@react-native-community/checkbox",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\checkbox\\RNCCheckbox.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\checkbox\\RNCCheckbox.podspec",
           "version": "0.5.17",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\checkbox\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\checkbox\\android",
           "packageImportPath": "import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;",
           "packageInstance": "new ReactCheckBoxPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/@react-native-community/checkbox/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/@react-native-community/checkbox/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -28,22 +28,22 @@
       }
     },
     "@react-native-community/masked-view": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\masked-view",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\masked-view",
       "name": "@react-native-community/masked-view",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\masked-view\\RNCMaskedView.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\masked-view\\RNCMaskedView.podspec",
           "version": "0.1.11",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-community\\masked-view\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-community\\masked-view\\android",
           "packageImportPath": "import org.reactnative.maskedview.RNCMaskedViewPackage;",
           "packageInstance": "new RNCMaskedViewPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/@react-native-community/masked-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/@react-native-community/masked-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -52,17 +52,17 @@
       }
     },
     "@react-native-picker/picker": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-picker\\picker",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-picker\\picker",
       "name": "@react-native-picker/picker",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-picker\\picker\\RNCPicker.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-picker\\picker\\RNCPicker.podspec",
           "version": "2.8.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\@react-native-picker\\picker\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\@react-native-picker\\picker\\android",
           "packageImportPath": "import com.reactnativecommunity.picker.RNCPickerPackage;",
           "packageInstance": "new RNCPickerPackage()",
           "buildTypes": [],
@@ -71,7 +71,7 @@
             "RNCAndroidDialogPickerComponentDescriptor",
             "RNCAndroidDropdownPickerComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -80,17 +80,17 @@
       }
     },
     "react-native-gesture-handler": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-gesture-handler",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-gesture-handler",
       "name": "react-native-gesture-handler",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-gesture-handler\\RNGestureHandler.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-gesture-handler\\RNGestureHandler.podspec",
           "version": "2.20.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-gesture-handler\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-gesture-handler\\android",
           "packageImportPath": "import com.swmansion.gesturehandler.RNGestureHandlerPackage;",
           "packageInstance": "new RNGestureHandlerPackage()",
           "buildTypes": [],
@@ -99,7 +99,7 @@
             "RNGestureHandlerButtonComponentDescriptor",
             "RNGestureHandlerRootViewComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -108,17 +108,17 @@
       }
     },
     "react-native-pager-view": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-pager-view",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-pager-view",
       "name": "react-native-pager-view",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-pager-view\\react-native-pager-view.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-pager-view\\react-native-pager-view.podspec",
           "version": "6.4.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-pager-view\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-pager-view\\android",
           "packageImportPath": "import com.reactnativepagerview.PagerViewPackage;",
           "packageInstance": "new PagerViewPackage()",
           "buildTypes": [],
@@ -127,7 +127,7 @@
             "LEGACY_RNCViewPagerComponentDescriptor",
             "RNCViewPagerComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -136,23 +136,23 @@
       }
     },
     "react-native-reanimated": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-reanimated",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-reanimated",
       "name": "react-native-reanimated",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-reanimated\\RNReanimated.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-reanimated\\RNReanimated.podspec",
           "version": "3.15.5",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-reanimated\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-reanimated\\android",
           "packageImportPath": "import com.swmansion.reanimated.ReanimatedPackage;",
           "packageInstance": "new ReanimatedPackage()",
           "buildTypes": [],
           "libraryName": "rnreanimated",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -161,17 +161,17 @@
       }
     },
     "react-native-safe-area-context": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-safe-area-context",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-safe-area-context",
       "name": "react-native-safe-area-context",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-safe-area-context\\react-native-safe-area-context.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-safe-area-context\\react-native-safe-area-context.podspec",
           "version": "4.11.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-safe-area-context\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-safe-area-context\\android",
           "packageImportPath": "import com.th3rdwave.safeareacontext.SafeAreaContextPackage;",
           "packageInstance": "new SafeAreaContextPackage()",
           "buildTypes": [],
@@ -180,7 +180,7 @@
             "RNCSafeAreaProviderComponentDescriptor",
             "RNCSafeAreaViewComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -189,17 +189,17 @@
       }
     },
     "react-native-screens": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-screens",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-screens",
       "name": "react-native-screens",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-screens\\RNScreens.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-screens\\RNScreens.podspec",
           "version": "3.34.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-screens\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-screens\\android",
           "packageImportPath": "import com.swmansion.rnscreens.RNScreensPackage;",
           "packageInstance": "new RNScreensPackage()",
           "buildTypes": [],
@@ -215,7 +215,7 @@
             "RNSScreenComponentDescriptor",
             "RNSModalScreenComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -224,23 +224,23 @@
       }
     },
     "react-native-vector-icons": {
-      "root": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-vector-icons",
+      "root": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-vector-icons",
       "name": "react-native-vector-icons",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-vector-icons\\RNVectorIcons.podspec",
+          "podspecPath": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-vector-icons\\RNVectorIcons.podspec",
           "version": "10.2.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\Users\\user\\TicketApp\\src\\node_modules\\react-native-vector-icons\\android",
+          "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\node_modules\\react-native-vector-icons\\android",
           "packageImportPath": "import com.oblador.vectoricons.VectorIconsPackage;",
           "packageInstance": "new VectorIconsPackage()",
           "buildTypes": [],
           "libraryName": "RNVectorIconsSpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/Users/user/TicketApp/src/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "C:/Users/user/Ticket-App-1/src/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -410,7 +410,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "C:\\Users\\user\\TicketApp\\src"
+          "default": "C:\\Users\\user\\Ticket-App-1\\src"
         },
         {
           "name": "--platform <string>",
@@ -699,7 +699,7 @@
   ],
   "project": {
     "ios": {
-      "sourceDir": "C:\\Users\\user\\TicketApp\\src\\ios",
+      "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\ios",
       "xcodeProject": {
         "name": "src.xcodeproj",
         "path": ".",
@@ -708,7 +708,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "C:\\Users\\user\\TicketApp\\src\\android",
+      "sourceDir": "C:\\Users\\user\\Ticket-App-1\\src\\android",
       "appName": "app",
       "packageName": "com.src",
       "applicationId": "com.src",

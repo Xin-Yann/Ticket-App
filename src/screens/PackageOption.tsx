@@ -47,7 +47,6 @@ interface BookItem {
   travelers: Traveler[];
 }
 
-
 const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) => {
   const { item } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
@@ -62,7 +61,6 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
   const { addToCart } = useContext(CartContext) || { addToCart: () => { } };
-
 
   const handleSelectOption = (option: TicketOption) => {
     setSelectedOption(option);
@@ -178,9 +176,12 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
 
           <View style={styles.contentContainer}>
             <Text style={styles.title}>Package Options</Text>
+
             {item.ticketOption.map((option: TicketOption) => (
               <View key={option.id} style={styles.ticketOptionCard}>
+
                 <Image source={{ uri: option.image }} style={styles.ticketImage} />
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Text style={styles.ticketOptionTitle}>{option.title}</Text>
                   <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => handleSeeDetails(option)}>
@@ -188,6 +189,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                     <Image source={require('../image/back-right.png')} style={styles.iconback} />
                   </TouchableOpacity>
                 </View>
+
                 <View style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', justifyContent: 'space-between' }}>
                   <Text style={styles.ticketOptionPrice}>RM {option.price.toFixed(2)}</Text>
                   <TouchableOpacity style={styles.selectButton} onPress={() => handleSelectOption(option)}>
@@ -196,6 +198,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                 </View>
               </View>
             ))}
+
           </View>
         </View>
       </ScrollView>
@@ -213,6 +216,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
               <Text style={styles.selectedPackage}>
                 {selectedOption ? selectedOption.title : 'None'}
               </Text>
+              
               <Text style={styles.selectedDate}>
                 Selected Date: {selectedDate ? selectedDate : 'None'}
               </Text>
@@ -239,7 +243,6 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
                   <Picker.Item label="12:00 PM" value="12:00 PM" />
                 </Picker>
               </View>
-
 
               <Text style={styles.modalTitle}>Travelers</Text>
               {/* Adult */}
@@ -342,6 +345,7 @@ const PackageOption: React.FC<ItemDetailsScreenProps> = ({ navigation, route }) 
             <TouchableOpacity onPress={() => setDetailsModalVisible(false)} >
               <Image source={require('../image/close.png')} style={styles.iconClose} />
             </TouchableOpacity>
+            <Text style={styles.packageTitle}>Package Details</Text>
             {selectedOption && (
               <>
                 <Text style={styles.description}>{selectedOption.details}</Text>
@@ -501,7 +505,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
+    
   },
   modalTitle: {
     fontSize: 18,
@@ -522,7 +526,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginVertical: 10,
-    textAlign: 'left',
     lineHeight: 30,
     width: 250,
     color: '#001a33',
@@ -656,6 +659,13 @@ const styles = StyleSheet.create({
   },
   ticketImage: {
     display: 'none',
+  },
+  packageTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#001a33',
+    textAlign:'left',
   },
 
 });

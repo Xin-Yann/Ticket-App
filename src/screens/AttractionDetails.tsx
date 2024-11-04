@@ -40,7 +40,7 @@ const Attraction: React.FC<AttractionProps> = ({ navigation, route }) => {
                         <TouchableOpacity onPress={() => navigation.navigate('PackageOption', { item })}>
                             <Text style={styles.Othernav}>Package Option</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('ReviewsScreen')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ReviewsScreen', { item })}>
                             <Text style={styles.Othernav}>Review</Text>
                         </TouchableOpacity>
                     </ScrollView>
@@ -66,7 +66,6 @@ const Attraction: React.FC<AttractionProps> = ({ navigation, route }) => {
 
                     <View style={styles.hrLine} />
 
-                    {/* Additional Content Section */}
                     <View style={styles.contentContainer}>
                         <Text style={styles.title}>Overview</Text>
                         <Text style={styles.additionalInfo}>{item.desc}</Text>
@@ -74,7 +73,6 @@ const Attraction: React.FC<AttractionProps> = ({ navigation, route }) => {
                 </View>
             </ScrollView>
 
-            {/* Bottom Navigation */}
             <View style={styles.bottomNav}>
 
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Home')}>

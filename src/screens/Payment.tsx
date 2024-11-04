@@ -1,4 +1,3 @@
-// PaymentPage.tsx
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, ScrollView, Image } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
@@ -48,6 +47,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ navigation, route }) => {
     const { bookingDetails } = route.params as { bookingDetails: BookingDetails }; 
     const { addBooking } = useBookingHistory();
     const [selectedTab, setSelectedTab] = useState<'CreditCard' | 'TNG'>('CreditCard');
+    const [currentStep, setCurrentStep] = useState(2);
+    const totalSteps = 3;
 
     const renderPaymentForm = () => {
         if (selectedTab === 'CreditCard') {
@@ -76,6 +77,41 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ navigation, route }) => {
         navigation.navigate('PaymentSuccess'); 
     };
 
+    const ProgressBar = () => {
+        return (
+            <View style={styles.progressContainer}>
+                {Array.from({ length: totalSteps }, (_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.progressStep,
+                            index < currentStep ? styles.progressStepActive : styles.progressStepInactive
+                        ]}
+                    />
+                ))}
+            </View>
+        );
+    };
+
+    const ProgressLabels = () => {
+        const labels = ['Booking', 'Payment', 'Confirmation'];
+        return (
+            <View style={styles.labelContainer}>
+                {labels.map((label, index) => (
+                    <Text
+                        key={index}
+                        style={[
+                            styles.labelText,
+                            index < currentStep ? styles.labelActive : styles.labelInactive
+                        ]}
+                    >
+                        {label}
+                    </Text>
+                ))}
+            </View>
+        );
+    };
+
     return (
         <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
             <View style={styles.container}>
@@ -85,11 +121,15 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ navigation, route }) => {
                     </TouchableOpacity>
                     <Text style={styles.Headertitle}>Payment</Text>
                 </View>
+
+                <ProgressBar />
+                <ProgressLabels />
+
                 <ScrollView
                     style={styles.scrollView}
                     keyboardShouldPersistTaps="handled"
                 >
-                    {/* Booking Details Section */}
+            
                     <View style={styles.bookingDetailsContainer}>
 
                         <Text style={styles.ticketName}>{bookingDetails.ticket.name}</Text>
@@ -262,7 +302,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: '#F0F8FF', // Summary background
+        backgroundColor: '#F0F8FF', 
     },
     summaryContainer: {
         padding: 16,
@@ -273,7 +313,7 @@ const styles = StyleSheet.create({
     summaryRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 20, // Add some space between rows
+        marginBottom: 20, 
     },
     summaryText: {
         fontSize: 16,
@@ -327,6 +367,40 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 10,
     },
+    progressContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginVertical: 20 
+    },
+    progressStep: { 
+        flex: 1, 
+        height: 8, 
+        marginHorizontal: 4, 
+        borderRadius: 4 
+    },
+    progressStepActive: { 
+        backgroundColor: '#001a33' 
+    },
+    progressStepInactive: { 
+        backgroundColor: '#D3D3D3' 
+    },
+    labelContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginBottom: 20 
+    },
+    labelText: { 
+        fontSize: 14, 
+        textAlign: 'center', 
+        flex: 1 
+    },
+    labelActive: { 
+        color: '#001a33', 
+        fontWeight: 'bold' 
+    },
+    labelInactive: { 
+        color: 'gray' 
+    }
 });
 
 export default PaymentPage;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from './ThingsToDo';
@@ -35,7 +35,7 @@ interface BookingDetails {
     contact: string;
     subtotal: number;
     ticket: BookItem; 
-  }
+}
 
 type BookingPageProps = {
     navigation: StackNavigationProp<RootStackParamList, 'BookingPage'>;
@@ -46,12 +46,13 @@ const BookingPage: React.FC<BookingPageProps> = ({ navigation, route }) => {
     const { bookItem } = route.params;
     const [subtotal, setSubtotal] = useState(0);
 
-    // Form state
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [myKad, setMyKad] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
+    const [currentStep, setCurrentStep] = useState(1);
+    const totalSteps = 3;
 
     useEffect(() => {
         const calculatedSubtotal = bookItem.travelers.reduce((sum, traveler) => {
@@ -75,6 +76,40 @@ const BookingPage: React.FC<BookingPageProps> = ({ navigation, route }) => {
         navigation.navigate('PaymentPage', { bookingDetails });
     };
 
+    const ProgressBar = () => {
+        return (
+            <View style={styles.progressContainer}>
+                {Array.from({ length: totalSteps }, (_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.progressStep,
+                            index < currentStep ? styles.progressStepActive : styles.progressStepInactive
+                        ]}
+                    />
+                ))}
+            </View>
+        );
+    };
+
+    const ProgressLabels = () => {
+        const labels = ['Booking', 'Payment', 'Confirmation'];
+        return (
+            <View style={styles.labelContainer}>
+                {labels.map((label, index) => (
+                    <Text
+                        key={index}
+                        style={[
+                            styles.labelText,
+                            index < currentStep ? styles.labelActive : styles.labelInactive
+                        ]}
+                    >
+                        {label}
+                    </Text>
+                ))}
+            </View>
+        );
+    };
     return (
 
         <ImageBackground source={require('../image/background.png')} style={styles.backgroundImage}>
@@ -85,6 +120,10 @@ const BookingPage: React.FC<BookingPageProps> = ({ navigation, route }) => {
                     </TouchableOpacity>
                     <Text style={styles.title}>Fill In Booking Details</Text>
                 </View>
+
+                <ProgressBar />
+                <ProgressLabels />
+                
                 <ScrollView
                     style={styles.scrollView}
                     keyboardShouldPersistTaps="handled"
@@ -320,6 +359,40 @@ const styles = StyleSheet.create({
         color: '#001a33',
         marginBottom: 15,
         fontWeight: 'bold',
+    },
+    progressContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginVertical: 20 
+    },
+    progressStep: { 
+        flex: 1, 
+        height: 8, 
+        marginHorizontal: 4, 
+        borderRadius: 4 
+    },
+    progressStepActive: { 
+        backgroundColor: '#001a33' 
+    },
+    progressStepInactive: { 
+        backgroundColor: '#D3D3D3' 
+    },
+    labelContainer: { 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginBottom: 20 
+    },
+    labelText: { 
+        fontSize: 14, 
+        textAlign: 'center', 
+        flex: 1 
+    },
+    labelActive: { 
+        color: '#001a33', 
+        fontWeight: 'bold' 
+    },
+    labelInactive: { 
+        color: 'gray' 
     }
 });
 
